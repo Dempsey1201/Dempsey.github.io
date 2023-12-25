@@ -17,7 +17,7 @@
 
 
 
-<title>Java 基础1 - Java 语言特性 | Studty Log</title>
+<title>Java 基础 - Hash 相关 | Studty Log</title>
 
 
 
@@ -200,7 +200,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Java 基础1 - Java 语言特性</h1>
+            <h1 class="post-title">Java 基础 - Hash 相关</h1>
             
                 <div class="post-meta">
                     
@@ -225,7 +225,10 @@
         </header>
 
         <div class="post-content">
-            <h1 id="Java-语言特性"><a href="#Java-语言特性" class="headerlink" title="Java 语言特性"></a>Java 语言特性</h1><h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3>
+            <h1 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h1><p>HashMap 是一个散列表，是Key-Value的键值对，不支持线程同步，无序，并且允许存在一个为空的键值。继承于AbstractMap，实现了 Map、Cloneable、java.io.Serializable 接口。<br>HashMap 使用的必须是引用类型，元素只能是对象，不能用基本类型作为键或者值的数据类型。</p>
+<p>HashMap的底层实现原理是 数据＋链表（jdk 1.7）和 数据 + 红黑树 + 链表 (jdk 1.8+)。出现这个主要原因是因为原始以链表作为底层数据结构的 HashMap 是增删非常方便的，而对于查找则比较困难，需要通过遍历链表的方式实现，而红黑树因为其出色的查找效率被引入。但是只有链表长度超过8，数组超过64的时候才会使用红黑树进行存储，否则还是链表。这主要是因为在数据量不大的时候在HashMap扩容的时候对红黑树的维护成本过高。</p>
+<p><img src="/Demsey.github.io/Demsey.github.io/2023/11/20/Java-1/Java-1/HashMap-1.png" alt="源码注释内容"></p>
+
         </div>
 
         
