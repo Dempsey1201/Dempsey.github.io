@@ -17,7 +17,7 @@
 
 
 
-<title>Leetcode 54. 螺旋矩阵 | Studty Log</title>
+<title>Leetcode 162.寻找峰值 | Studty Log</title>
 
 
 
@@ -200,7 +200,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Leetcode 54. 螺旋矩阵</h1>
+            <h1 class="post-title">Leetcode 162.寻找峰值</h1>
             
                 <div class="post-meta">
                     
@@ -209,7 +209,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">十二月 20, 2023&nbsp;&nbsp;14:20:05</a>
+                        Date: <a href="#">十二月 19, 2023&nbsp;&nbsp;11:12:09</a>
                         </span>
                     
                     
@@ -225,9 +225,13 @@
         </header>
 
         <div class="post-content">
-            <h1 id="Leetcode-54-螺旋矩阵"><a href="#Leetcode-54-螺旋矩阵" class="headerlink" title="Leetcode 54.螺旋矩阵"></a>Leetcode 54.螺旋矩阵</h1><p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/spiral-matrix/description/">螺旋矩阵</a></p>
-<p>这道题目特别需要细心的模拟，<strong>最后总是会多一圈，需要用边界条件，List的size去处理，当目标结果大于size就不要进入循环了</strong><br>条件是：<code>(res.size() &lt; maxline * maxrow)</code></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;Integer&gt; <span class="title function_">spiralOrder</span><span class="params">(<span class="type">int</span>[][] matrix)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">line</span> <span class="operator">=</span> <span class="number">0</span>, row = <span class="number">0</span>;</span><br><span class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">maxline</span> <span class="operator">=</span> matrix.length, maxrow = matrix[<span class="number">0</span>].length;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 注意条件：&amp;&amp; (res.size() &lt; maxline * maxrow))</span></span><br><span class="line">        <span class="keyword">for</span> (; line &lt;= (<span class="type">int</span>)(maxline / <span class="number">2</span>); line ++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">top</span> <span class="operator">=</span> line, bot = maxline - <span class="number">1</span> - top;</span><br><span class="line">            <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> line, right = maxrow - <span class="number">1</span> - left;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> left; (temp &lt;= right &amp;&amp; (res.size() &lt; maxline * maxrow)); temp ++) &#123;</span><br><span class="line">                res.add(matrix[top][temp]);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> top + <span class="number">1</span>; (temp &lt;= bot &amp;&amp; (res.size() &lt; maxline * maxrow)); temp ++) &#123;</span><br><span class="line">                res.add(matrix[temp][right]);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> right - <span class="number">1</span>; ((temp &gt;= left) &amp;&amp; (res.size() &lt; maxline * maxrow)); temp --) &#123;</span><br><span class="line">                res.add(matrix[bot][temp]);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> bot - <span class="number">1</span>; (temp &gt; top &amp;&amp; (res.size() &lt; maxline * maxrow)); temp --) &#123;</span><br><span class="line">                res.add(matrix[temp][left]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h1 id="Leetcode-162-寻找峰值"><a href="#Leetcode-162-寻找峰值" class="headerlink" title="Leetcode 162.寻找峰值"></a>Leetcode 162.寻找峰值</h1><p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-peak-element/description/">寻找峰值</a></p>
+<p>题目意思理解：</p>
+<ul>
+<li>峰值的定义是比两边的高即可，不需要是最高值，因此只需要找到一个极值即可；</li>
+<li>最主要的条件是两边都是 -∞ ，这意味着从中间开始到 n 之间一定可以找到一个极值。因为条件 num[i] !&#x3D; nums[i+1] 也给了一个好的条件，意味着不会出现两个一样的相邻元素；</li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findPeakElement</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>, high = nums.length - <span class="number">1</span>;</span><br><span class="line">         </span><br><span class="line">         <span class="comment">// 如果只有一个元素，直接返回即可。</span></span><br><span class="line">        <span class="keyword">if</span> (high == low) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 这里不需要等于。二分的条件如果等于也可以进循环的话，会出不去。</span></span><br><span class="line">        <span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (low + high) / <span class="number">2</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (nums[mid] &lt; nums[mid+<span class="number">1</span>]) &#123;</span><br><span class="line">                low = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (mid - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; nums[mid - <span class="number">1</span>] &lt; nums[mid]) &#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125;</span><br><span class="line">                high = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> low;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
 
         
@@ -241,7 +245,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://dempsey1201.github.io/Demsey.github.io/2023/12/20/alogorithm-3/">https://dempsey1201.github.io/Demsey.github.io/2023/12/20/alogorithm-3/</a></span>
+                        <span><a href="https://dempsey1201.github.io/Demsey.github.io/2023/12/19/algorithm-2/">https://dempsey1201.github.io/Demsey.github.io/2023/12/19/algorithm-2/</a></span>
                     </p>
                 
                 
@@ -278,10 +282,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/Demsey.github.io/2023/12/25/alogorithm-4/">Leetcode 3. 无重复字符的最长子串</a>
+                <a class="prev" rel="prev" href="/Demsey.github.io/2023/12/20/algorithm-3/">Leetcode 54. 螺旋矩阵</a>
             
             
-            <a class="next" rel="next" href="/Demsey.github.io/2023/12/19/alogorithm-2/">Leetcode 162.寻找峰值</a>
+            <a class="next" rel="next" href="/Demsey.github.io/2023/12/18/algorithm-1/">Leetcode 2.两数相加</a>
             
         </section>
 
