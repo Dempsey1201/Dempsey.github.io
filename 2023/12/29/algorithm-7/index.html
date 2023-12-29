@@ -17,7 +17,7 @@
 
 
 
-<title>Studty Log</title>
+<title>Leetcode 25. K 个一组翻转链表 | Studty Log</title>
 
 
 
@@ -131,11 +131,76 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title"></h1>
+            <h1 class="post-title">Leetcode 25. K 个一组翻转链表</h1>
             
                 <div class="post-meta">
                     
@@ -148,12 +213,20 @@
                         </span>
                     
                     
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/Demsey.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                            
+                        </span>
+                    
                 </div>
             
         </header>
 
         <div class="post-content">
-            
+            <h1 id="Leetcode-25-K-个一组翻转链表"><a href="#Leetcode-25-K-个一组翻转链表" class="headerlink" title="Leetcode 25. K 个一组翻转链表"></a>Leetcode 25. K 个一组翻转链表</h1><p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-nodes-in-k-group/description/">K 个一组翻转链表</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">reverseKGroup</span><span class="params">(ListNode head, <span class="type">int</span> k)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">iterNode</span> <span class="operator">=</span> head;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">newHead</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(), newHeadTemp = newHead;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">preprev</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (iterNode != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">ListNode</span> <span class="variable">checkNode</span> <span class="operator">=</span> iterNode;</span><br><span class="line">            <span class="type">int</span> <span class="variable">checkCount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (checkNode != <span class="literal">null</span> &amp;&amp; checkCount &lt; k) &#123;</span><br><span class="line">                checkCount ++;</span><br><span class="line">                checkNode = checkNode.next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">ListNode</span> <span class="variable">iterNewHead</span> <span class="operator">=</span> iterNode;</span><br><span class="line">            <span class="keyword">if</span> (checkCount == k) &#123;</span><br><span class="line">                <span class="type">ListNode</span> <span class="variable">prev</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>; count &lt; k; count ++) &#123;</span><br><span class="line">                    <span class="type">ListNode</span> <span class="variable">temp</span> <span class="operator">=</span> iterNode.next;</span><br><span class="line">                    iterNode.next = prev;</span><br><span class="line">                    prev = iterNode;</span><br><span class="line">                    <span class="keyword">if</span> (count == k-<span class="number">1</span>) &#123;</span><br><span class="line">                        newHeadTemp.next = iterNode;</span><br><span class="line">                    &#125;</span><br><span class="line">                    iterNode = temp;</span><br><span class="line">                &#125;</span><br><span class="line">                newHeadTemp = iterNewHead;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                newHeadTemp.next = iterNode;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
 
         
@@ -190,6 +263,10 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
+                    
+                        <a href="/Demsey.github.io/tags/Algorithm/"># Algorithm</a>
+                    
+                        
                 </span>
             </div>
             <div>
@@ -200,8 +277,10 @@
         </section>
         <section class="post-nav">
             
+                <a class="prev" rel="prev" href="/Demsey.github.io/2023/12/29/algorithm-8/">Leetcode 15. 三数之和</a>
             
-            <a class="next" rel="next" href="/Demsey.github.io/2023/12/28/algotithm-6/">Leetcode 215. 数组中的第K个最大元素</a>
+            
+            <a class="next" rel="next" href="/Demsey.github.io/2023/12/28/algorithm-6/">Leetcode 215. 数组中的第K个最大元素</a>
             
         </section>
 
