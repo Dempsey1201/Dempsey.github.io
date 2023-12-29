@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Dempsey Dong">
+
+
+    <meta name="subtitle" content="Dempsey">
+
+
+    <meta name="description" content="Always believe tomorrow.">
+
+
+
+<title>Leetcode 215. 数组中的第K个最大元素 | Studty Log</title>
+
+
+
+    <link rel="icon" href="/Demsey.github.io/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/Demsey.github.io/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/Demsey.github.io/js/script.js"></script>
+    
+    <script src="/Demsey.github.io/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/Demsey.github.io/">Dempsey&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/Demsey.github.io/archives">Posts</a>
+                
+                    <a class="menu-item" href="/Demsey.github.io/category">Categories</a>
+                
+                    <a class="menu-item" href="/Demsey.github.io/tag">Tags</a>
+                
+                    <a class="menu-item" href="/Demsey.github.io/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/Demsey.github.io/">Dempsey&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/Demsey.github.io/archives">Posts</a>
+                
+                    <a class="menu-item" href="/Demsey.github.io/category">Categories</a>
+                
+                    <a class="menu-item" href="/Demsey.github.io/tag">Tags</a>
+                
+                    <a class="menu-item" href="/Demsey.github.io/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Leetcode 215. 数组中的第K个最大元素</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Dempsey Dong</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 28, 2023&nbsp;&nbsp;8:45:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/Demsey.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="215-数组中的第K个最大元素"><a href="#215-数组中的第K个最大元素" class="headerlink" title="215. 数组中的第K个最大元素"></a>215. 数组中的第K个最大元素</h1><p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/kth-largest-element-in-an-array/description/">数组中的第K个最大元素</a></p>
+<p>本题快排是一个课题通过的写法，但是衍生出来的堆排序和 O(n) 的写法也应该要学会。</p>
+<h2 id="快速排序（百分之一万需要会的）"><a href="#快速排序（百分之一万需要会的）" class="headerlink" title="快速排序（百分之一万需要会的）"></a>快速排序（百分之一万需要会的）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findKthLargest</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        quickSort(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">        System.out.println(Arrays.toString(nums));</span><br><span class="line">        <span class="keyword">return</span> nums[nums.length - k];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">quickSort</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> s, <span class="type">int</span> e)</span> &#123;</span><br><span class="line">        <span class="comment">// int low = ,  high = nums.length - 1;</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (s + e) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> s, high = e;</span><br><span class="line">        <span class="comment">// !!!!!!!!务必一定注意比较的是当时mid的那个位置的值，而不是一直都锁定在那个位置!!!</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">midV</span> <span class="operator">=</span> nums[mid];</span><br><span class="line">        <span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">            <span class="keyword">while</span> (nums[low] &lt; midV) low ++;</span><br><span class="line">            <span class="keyword">while</span> (nums[high] &gt; midV) high --;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (low &lt;= high) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> nums[low];</span><br><span class="line">                nums[low] = nums[high];</span><br><span class="line">                nums[high] = temp;</span><br><span class="line">                low ++;</span><br><span class="line">                high --;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 注意比较的值，不是和mid比大小</span></span><br><span class="line">        <span class="keyword">if</span> (s &lt; high) quickSort(nums, s, high);</span><br><span class="line">        <span class="keyword">if</span> (low &lt; e) quickSort(nums, low, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="O-n-的快速排序改版算法"><a href="#O-n-的快速排序改版算法" class="headerlink" title="O(n) 的快速排序改版算法"></a>O(n) 的快速排序改版算法</h2><p>这里 select 必须搞会，这个地方的快排和理论上的操作是一样的，但是和上面的模板代码不同，两个方式都要学会。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">Random</span> <span class="variable">random</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Random</span>(System.currentTimeMillis());</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findKthLargest</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">end</span> <span class="operator">=</span> nums.length - <span class="number">1</span>, begin = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">target</span> <span class="operator">=</span> nums.length - k;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">res</span> <span class="operator">=</span> quickSelect(nums, begin, end);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (res == target) &#123;</span><br><span class="line">                <span class="keyword">return</span> nums[res];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (res &gt; target) &#123;</span><br><span class="line">                end = res - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                begin = res + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">quickSelect</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> s, <span class="type">int</span> e)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">candidate</span> <span class="operator">=</span> s + random.nextInt(e - s + <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// int candidate = (s + e) / 2;</span></span><br><span class="line">        swap(nums, s, candidate);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> s + <span class="number">1</span>, high = e, value = nums[s];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (low &lt;= high &amp;&amp; nums[low] &lt; value) &#123;</span><br><span class="line">                low ++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (low &lt;= high &amp;&amp; nums[high] &gt; value) &#123;</span><br><span class="line">                high --;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (low &gt;= high) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            swap(nums, low, high);</span><br><span class="line">            low ++;</span><br><span class="line">            high --;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        swap(nums, s, high);</span><br><span class="line">        <span class="keyword">return</span> high;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> low, <span class="type">int</span> high)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> nums[low];</span><br><span class="line">        nums[low] = nums[high];</span><br><span class="line">        nums[high] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="堆排序解法-Most-Important"><a href="#堆排序解法-Most-Important" class="headerlink" title="堆排序解法 (Most Important)"></a>堆排序解法 (Most Important)</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findKthLargest</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 需要先建堆，把堆变成有序的，这样后面的交换就可以从上到下 / 从下到上了。</span></span><br><span class="line">        init(nums, nums.length - <span class="number">1</span>);</span><br><span class="line">        swap(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从倒数第二个数组节点开始对堆进行有序选择。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> nums.length - <span class="number">2</span>; i &gt;= nums.length - k; i --) &#123;</span><br><span class="line">            treeify(nums, <span class="number">0</span>, i);</span><br><span class="line">            swap(nums, <span class="number">0</span>, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums[nums.length - k];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> size)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> size / <span class="number">2</span> ; i &gt;=<span class="number">0</span> ; i --) &#123;</span><br><span class="line">            treeify(nums, i, size);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">treeify</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> i, <span class="type">int</span> size)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">2</span> * i + <span class="number">1</span>, r = <span class="number">2</span> * i + <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">bigger</span> <span class="operator">=</span> i;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 选择三个节点里面最大的</span></span><br><span class="line">        <span class="keyword">if</span> (l &lt;= size &amp;&amp; nums[l] &gt; nums[bigger]) &#123;</span><br><span class="line">            bigger = l;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(r &lt;= size &amp;&amp; nums[r] &gt; nums[bigger]) &#123;</span><br><span class="line">            bigger = r;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果需要交换的话，同时交换的时候也一定注意需要对其子树进行**整理**。</span></span><br><span class="line">        <span class="keyword">if</span> (bigger != i) &#123;</span><br><span class="line">            swap(nums, i , bigger);</span><br><span class="line">            treeify(nums, bigger, size);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> low, <span class="type">int</span> high)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> nums[low];</span><br><span class="line">        nums[low] = nums[high];</span><br><span class="line">        nums[high] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Dempsey Dong</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://dempsey1201.github.io/Demsey.github.io/2023/12/28/algotithm-6/">https://dempsey1201.github.io/Demsey.github.io/2023/12/28/algotithm-6/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Everything will be the <strong>BEST</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/Demsey.github.io/tags/Algorithm/"># Algorithm</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/Demsey.github.io/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/Demsey.github.io/2023/12/29/algorithm-7/"></a>
+            
+            
+            <a class="next" rel="next" href="/Demsey.github.io/2023/12/26/algotithm-5/">Leetcode 206. 反转链表</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Dempsey Dong | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
