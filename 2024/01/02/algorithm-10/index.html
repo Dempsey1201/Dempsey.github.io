@@ -17,7 +17,7 @@
 
 
 
-<title>Leetcode 53. 最大子数组和 | Studty Log</title>
+<title>Leetcode 5. 最长回文子串 | Studty Log</title>
 
 
 
@@ -200,7 +200,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Leetcode 53. 最大子数组和</h1>
+            <h1 class="post-title">Leetcode 5. 最长回文子串</h1>
             
                 <div class="post-meta">
                     
@@ -209,7 +209,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">十二月 29, 2023&nbsp;&nbsp;17:19:21</a>
+                        Date: <a href="#">一月 2, 2024&nbsp;&nbsp;13:53:27</a>
                         </span>
                     
                     
@@ -225,9 +225,16 @@
         </header>
 
         <div class="post-content">
-            <h1 id="Leetcode-53-最大子数组和"><a href="#Leetcode-53-最大子数组和" class="headerlink" title="Leetcode 53. 最大子数组和"></a>Leetcode 53. 最大子数组和</h1><p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-subarray/description/">53. 最大子数组和</a><br>非常典型的一个DP的题目，思考的点在于 <code>temp = Math.max(nums[i], nums[i] + temp);</code> 这里，因为他必须要经过i这个点，要么就要他，要么就单独的选择它。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxSubArray</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> -<span class="number">10000</span>, max = -<span class="number">10000</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span> ; i &lt; nums.length; i ++) &#123;</span><br><span class="line">            temp = Math.max(nums[i], nums[i] + temp);</span><br><span class="line">            max = Math.max(temp, max);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+            <h1 id="Leetcode-5-最长回文子串"><a href="#Leetcode-5-最长回文子串" class="headerlink" title="Leetcode 5. 最长回文子串"></a>Leetcode 5. 最长回文子串</h1><p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-palindromic-substring/description/">5. 最长回文子串</a></p>
+<p>非常重要的题目，用中心外扩的方法和二维动态规划的时间复杂度都是 O(n^2), 这个题目需要注意的有</p>
+<ol>
+<li>算法的计算过程中，注意Java的substring函数的调用方式是 s.substring(begin, end) -&gt; [begin, end), 左闭右开的区间取值；</li>
+<li>从中间开始往两边进入回文字符串的判断函数（用双指针来决策），并且注意边界条件。</li>
+<li>对于复数的回文字符串，一定会存在左或右有一个与候选值相同的元素，这个元素可以通过判断值的相等不断走实现复数的开始。<br>顺序： 先左 - 再右 - 最后是左右同时往外扩。</li>
+</ol>
+<p>往左判断<br>    当前的字符是否与候选相同，可以出现 abbad(low &#x3D; center &#x3D; candidate) -&gt; abbad(low &#x3D; a, high &#x3D; b(No.2));<br>往右判断<br>    继续判断当前的字符是否与候选的一样，进而变化成 abbad(low &#x3D; a, high &#x3D; a);<br>两边同时扩张<br>    如果 low 和 high 指向的是一样的，继续向外扩张，否则返回 low 和 high;<br>    abbad(low &#x3D; -1, high &#x3D; d); 返回 (++low, high) 即可，因为思考点 1的指引。</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">longestPalindrome</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] temp = <span class="literal">null</span>, res = <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= s.length() / <span class="number">2</span>; i ++) &#123;</span><br><span class="line">            temp = findFromCenter(s, s.length() / <span class="number">2</span> + i);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (Math.abs(temp[<span class="number">0</span>] - temp[<span class="number">1</span>]) &gt; Math.abs(res[<span class="number">0</span>] - res[<span class="number">1</span>])) &#123;</span><br><span class="line">                res[<span class="number">0</span>] = temp[<span class="number">0</span>];</span><br><span class="line">                res[<span class="number">1</span>] = temp[<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            temp = findFromCenter(s, s.length() / <span class="number">2</span> - i);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (Math.abs(temp[<span class="number">0</span>] - temp[<span class="number">1</span>]) &gt; Math.abs(res[<span class="number">0</span>] - res[<span class="number">1</span>])) &#123;</span><br><span class="line">                res[<span class="number">0</span>] = temp[<span class="number">0</span>];</span><br><span class="line">                res[<span class="number">1</span>] = temp[<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.substring(res[<span class="number">0</span>], res[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] findFromCenter(String s, <span class="type">int</span> center) &#123;</span><br><span class="line">        <span class="keyword">if</span> (center &lt; <span class="number">0</span> || center &gt;= s.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> center, high = center;</span><br><span class="line">         </span><br><span class="line">        <span class="keyword">while</span> (low &gt;= <span class="number">0</span> &amp;&amp; low &lt; s.length() &amp;&amp; s.charAt(low) == s.charAt(center)) low --;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (high &gt;= <span class="number">0</span> &amp;&amp; high &lt; s.length() &amp;&amp; s.charAt(high) == s.charAt(center)) high ++;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (; low &gt;= <span class="number">0</span> &amp;&amp; high &lt; s.length() ; low --, high ++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.charAt(low) != s.charAt(high)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123; ++ low, high&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;Math.max(<span class="number">0</span>, ++ low), Math.min(s.length(), high)&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
 
         
@@ -241,7 +248,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://dempsey1201.github.io/Demsey.github.io/2023/12/29/algorithm-9/">https://dempsey1201.github.io/Demsey.github.io/2023/12/29/algorithm-9/</a></span>
+                        <span><a href="https://dempsey1201.github.io/Demsey.github.io/2024/01/02/algorithm-10/">https://dempsey1201.github.io/Demsey.github.io/2024/01/02/algorithm-10/</a></span>
                     </p>
                 
                 
@@ -278,10 +285,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/Demsey.github.io/2024/01/02/algorithm-10/">Leetcode 5. 最长回文子串</a>
             
-            
-            <a class="next" rel="next" href="/Demsey.github.io/2023/12/29/algorithm-8/">Leetcode 15. 三数之和</a>
+            <a class="next" rel="next" href="/Demsey.github.io/2023/12/29/algorithm-9/">Leetcode 53. 最大子数组和</a>
             
         </section>
 
