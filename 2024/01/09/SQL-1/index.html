@@ -227,6 +227,25 @@
         <div class="post-content">
             <h2 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combine-two-tables/description/">题目1</a></p>
 <p><img src="/Dempsey.github.io/2024/01/09/SQL-1/JOIN-image.png" alt="JOIN-IMAGE"></p>
+<h2 id="排序选择第N个大的元素"><a href="#排序选择第N个大的元素" class="headerlink" title="排序选择第N个大的元素"></a>排序选择第N个大的元素</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/second-highest-salary/description/">176. 第二高的薪水</a></p>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ol>
+<li>如何选择排序后的第N个开始的M个元素？<ul>
+<li>offset N- limit M；位移N个元素（0开始计数），从第N个开始，取M个元素。 </li>
+<li>limit M,N；和上面的一样。</li>
+</ul>
+</li>
+<li>如何从SQL语句里面获取返回的NULL？<ul>
+<li>IFNULL() 语句，用法为 IFNULL(SELECT, NULL)如果前面的语句返回没有内容那么就返回第二个元素，否则就返回前面语句的结果；</li>
+<li>聚合函数返回NULL：当使用聚合函数（例如SUM、AVG、MAX、MIN、COUNT）对结果集进行聚合时，如果所有被聚合的行都包含NULL值，则聚合函数将返回NULL。</li>
+<li>如题目1，在链接的时候会出现NULL。</li>
+</ul>
+</li>
+</ol>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><ol>
+<li>使用LIMIT实现<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    IFNULL (</span><br><span class="line">        (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary  </span><br><span class="line">        <span class="keyword">FROM</span> Employee</span><br><span class="line">        <span class="keyword">ORDER</span> <span class="keyword">BY</span> salary <span class="keyword">DESC</span></span><br><span class="line">        LIMIT <span class="number">1</span>,<span class="number">1</span>), <span class="keyword">NULL</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">AS</span> SecondHighestSalary</span><br></pre></td></tr></table></figure></li>
+<li>使用聚合函数实现(仅对该题有效)<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">MAX</span>(salary) SecondHighestSalary</span><br><span class="line"><span class="keyword">from</span> Employee</span><br><span class="line"><span class="keyword">WHERE</span> salary <span class="operator">&lt;</span> (<span class="keyword">SELECT</span> <span class="built_in">MAX</span>(salary) <span class="keyword">from</span> Employee)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="进阶题"><a href="#进阶题" class="headerlink" title="进阶题"></a>进阶题</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/nth-highest-salary/">177. 第N高的薪水</a></p>
 
         </div>
 
