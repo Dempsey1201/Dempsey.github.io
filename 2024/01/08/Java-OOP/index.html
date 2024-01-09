@@ -271,6 +271,31 @@
 </ul>
 </li>
 </ol>
+<h2 id="4-JAVA的可变参数"><a href="#4-JAVA的可变参数" class="headerlink" title="4. JAVA的可变参数"></a>4. JAVA的可变参数</h2><p>例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    print(<span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;沉&quot;</span>&#125;);</span><br><span class="line">    print(<span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;沉&quot;</span>, <span class="string">&quot;默&quot;</span>&#125;);</span><br><span class="line">    print(<span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;沉&quot;</span>, <span class="string">&quot;默&quot;</span>, <span class="string">&quot;王&quot;</span>&#125;);</span><br><span class="line">    print(<span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;沉&quot;</span>, <span class="string">&quot;默&quot;</span>, <span class="string">&quot;王&quot;</span>, <span class="string">&quot;二&quot;</span>&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">print</span><span class="params">(String... strs)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (String s : strs)</span><br><span class="line">        System.out.print(s);</span><br><span class="line">    System.out.println();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 print 方法可以接收多个由 String 组成的参数序列。</p>
+<ol>
+<li>必须要在最后；</li>
+<li>尽量不要使用。</li>
+</ol>
+<h2 id="native-方法"><a href="#native-方法" class="headerlink" title="native 方法"></a>native 方法</h2><p>native 修饰的方法叫做 本地方法，其通过JNI实现调用其他语言实现的基础功能。目前 Java 的getClass()，hashCode()等方法就是native修饰的。</p>
+<ul>
+<li>失去了平台可移植性。因为被调用的函数不是通过Java语言写的，本地系统必须要有这一类函数才可以执行；</li>
+<li>对于对于更接近系统界别的代码可以通过JNI调用实现更快的语言执行速度。</li>
+</ul>
+<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><ol>
+<li>没有返回值；</li>
+<li>只能被 范围 修饰符修饰；</li>
+<li>构造方法的调用在new的时候JVM自动调用；</li>
+</ol>
+<h2 id="复制对象"><a href="#复制对象" class="headerlink" title="复制对象"></a>复制对象</h2><ol>
+<li><p>通过构造函数直接复制；在构造函数里面再次以本类作为参数写一个新的构造函数，就可以传对象给构造函数，从而创造出一个字段一样的对象。</p>
+</li>
+<li><p>通过对对象的变量进行赋值实现；通过初始化以后的setter来操作每一个字段实现复制对象。</p>
+</li>
+<li><p><strong>通过Object的clone()方法实现。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
 
         </div>
 
