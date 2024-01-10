@@ -278,17 +278,17 @@
 <li>必须要在最后；</li>
 <li>尽量不要使用。</li>
 </ol>
-<h2 id="native-方法"><a href="#native-方法" class="headerlink" title="native 方法"></a>native 方法</h2><p>native 修饰的方法叫做 本地方法，其通过JNI实现调用其他语言实现的基础功能。目前 Java 的getClass()，hashCode()等方法就是native修饰的。</p>
+<h2 id="5-native-方法"><a href="#5-native-方法" class="headerlink" title="5. native 方法"></a>5. native 方法</h2><p>native 修饰的方法叫做 本地方法，其通过JNI实现调用其他语言实现的基础功能。目前 Java 的getClass()，hashCode()等方法就是native修饰的。</p>
 <ul>
 <li>失去了平台可移植性。因为被调用的函数不是通过Java语言写的，本地系统必须要有这一类函数才可以执行；</li>
 <li>对于对于更接近系统界别的代码可以通过JNI调用实现更快的语言执行速度。</li>
 </ul>
-<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><ol>
+<h2 id="6-构造方法"><a href="#6-构造方法" class="headerlink" title="6. 构造方法"></a>6. 构造方法</h2><ol>
 <li>没有返回值；</li>
 <li>只能被 范围 修饰符修饰；</li>
 <li>构造方法的调用在new的时候JVM自动调用；</li>
 </ol>
-<h2 id="复制对象"><a href="#复制对象" class="headerlink" title="复制对象"></a>复制对象</h2><ol>
+<h2 id="7-复制对象"><a href="#7-复制对象" class="headerlink" title="7. 复制对象"></a>7. 复制对象</h2><ol>
 <li><p>通过构造函数直接复制；在构造函数里面再次以本类作为参数写一个新的构造函数，就可以传对象给构造函数，从而创造出一个字段一样的对象。</p>
 </li>
 <li><p>通过对对象的变量进行赋值实现；通过初始化以后的setter来操作每一个字段实现复制对象。</p>
@@ -296,6 +296,13 @@
 <li><p><strong>通过Object的clone()方法实现。</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ol>
+<h2 id="8-抽象类"><a href="#8-抽象类" class="headerlink" title="8. 抽象类"></a>8. 抽象类</h2><ol>
+<li>抽象类不能被实例化；</li>
+<li>抽象类必须有 一个 或者 多个 抽象方法；</li>
+<li>entendx 扩展抽象类，子类必须要实现抽象方法；</li>
+<li>抽象方法一定没有方法体。</li>
+</ol>
+<p>好处：<br>    - 复用抽象类代码；<br>    - 对于不同的子类抽象方法可以进行不同的实际的适应需求的操作。</p>
 
         </div>
 
