@@ -17,7 +17,7 @@
 
 
 
-<title>SQL-1 | Studty Log</title>
+<title>designMode | Studty Log</title>
 
 
 
@@ -200,7 +200,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">SQL-1</h1>
+            <h1 class="post-title">designMode</h1>
             
                 <div class="post-meta">
                     
@@ -209,14 +209,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">一月 9, 2024&nbsp;&nbsp;9:58:37</a>
+                        Date: <a href="#">一月 11, 2024&nbsp;&nbsp;9:07:20</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/Dempsey.github.io/categories/SQL/">SQL</a>
+                                <a href="/Dempsey.github.io/categories/Must-Have/">Must-Have</a>
                             
                         </span>
                     
@@ -225,31 +225,10 @@
         </header>
 
         <div class="post-content">
-            <h2 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combine-two-tables/description/">题目1</a></p>
-<p><img src="/Dempsey.github.io/2024/01/09/SQL-1/JOIN-image.png" alt="JOIN-IMAGE"></p>
-<h2 id="排序选择第N个大的元素"><a href="#排序选择第N个大的元素" class="headerlink" title="排序选择第N个大的元素"></a>排序选择第N个大的元素</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/second-highest-salary/description/">176. 第二高的薪水</a></p>
-<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ol>
-<li>如何选择排序后的第N个开始的M个元素？<ul>
-<li>offset N- limit M；位移N个元素（0开始计数），从第N个开始，取M个元素。 </li>
-<li>limit M,N；和上面的一样。</li>
-</ul>
-</li>
-<li>如何从SQL语句里面获取返回的NULL？<ul>
-<li>IFNULL() 语句，用法为 IFNULL(SELECT, NULL)如果前面的语句返回没有内容那么就返回第二个元素，否则就返回前面语句的结果；</li>
-<li>聚合函数返回NULL：当使用聚合函数（例如SUM、AVG、MAX、MIN、COUNT）对结果集进行聚合时，如果所有被聚合的行都包含NULL值，则聚合函数将返回NULL。</li>
-<li>如题目1，在链接的时候会出现NULL。</li>
-</ul>
-</li>
-</ol>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><ol>
-<li>使用LIMIT实现<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    IFNULL (</span><br><span class="line">        (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary  </span><br><span class="line">        <span class="keyword">FROM</span> Employee</span><br><span class="line">        <span class="keyword">ORDER</span> <span class="keyword">BY</span> salary <span class="keyword">DESC</span></span><br><span class="line">        LIMIT <span class="number">1</span>,<span class="number">1</span>), <span class="keyword">NULL</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">AS</span> SecondHighestSalary</span><br></pre></td></tr></table></figure></li>
-<li>使用聚合函数实现(仅对该题有效)<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">MAX</span>(salary) SecondHighestSalary</span><br><span class="line"><span class="keyword">from</span> Employee</span><br><span class="line"><span class="keyword">WHERE</span> salary <span class="operator">&lt;</span> (<span class="keyword">SELECT</span> <span class="built_in">MAX</span>(salary) <span class="keyword">from</span> Employee)</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="进阶题"><a href="#进阶题" class="headerlink" title="进阶题"></a>进阶题</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/nth-highest-salary/">177. 第N高的薪水</a></p>
-<h2 id="获取字符串字段的长度并且进行判断"><a href="#获取字符串字段的长度并且进行判断" class="headerlink" title="获取字符串字段的长度并且进行判断"></a>获取字符串字段的长度并且进行判断</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/invalid-tweets/description/">1683. 无效的推文</a><br>CHAR_LENGTH(字段) 可以获得每一条记录所在字段的长度信息。</p>
-<h2 id="获取SQL日期字段类型的相差天数"><a href="#获取SQL日期字段类型的相差天数" class="headerlink" title="获取SQL日期字段类型的相差天数"></a>获取SQL日期字段类型的相差天数</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rising-temperature/description/">197. 上升的温度</a><br>datediff(date1, date2) 可以获取两个日期相差的天数，是前一个减去后一个。</p>
-<h3 id="时间戳类型的差可以直接通过-“-”-来实现！！！"><a href="#时间戳类型的差可以直接通过-“-”-来实现！！！" class="headerlink" title="时间戳类型的差可以直接通过 “-” 来实现！！！"></a>时间戳类型的差可以直接通过 “-” 来实现！！！</h3><h2 id="保留小数类的函数"><a href="#保留小数类的函数" class="headerlink" title="保留小数类的函数"></a>保留小数类的函数</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/average-time-of-process-per-machine/description/">1661. 每台机器的进程平均运行时间</a><br>在SQL中，小数可以通过Round(num, 3)来保留三位小数。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Alone_in_/article/details/105897474">CAST, ROUND, CONVERT 区别辨析</a></p>
-
+            <h2 id="1-策略模式"><a href="#1-策略模式" class="headerlink" title="1. 策略模式"></a>1. 策略模式</h2><p>多个类继承自同一个接口，并且实现了接口中的方法。一个函数接收一个父类对象作为参数，返回或者调用传入子类对象的方法实现不同的传入参数输出不同的内容。</p>
+<h2 id="2-适配器模式"><a href="#2-适配器模式" class="headerlink" title="2. 适配器模式"></a>2. 适配器模式</h2><p>一个接口具有多个不同的方法，故实际继承自它的类必须要实现所有的方法。但是对于不同的类他们的需求不一样，可能只需要这些方法里面的几个方法，这样的情况下可以用适配器模式。在它们中间再加上一层实现接口的抽象类，因为抽象类可以只实现父类接口的一些内容，所以继承自这些抽象类的类就不必实现所有的接口内的方法了。这里的中间层抽象类相当于一个适配器，对于不同的类提供不同的接口。</p>
+<h2 id="3-工厂模式"><a href="#3-工厂模式" class="headerlink" title="3. 工厂模式"></a>3. 工厂模式</h2><p>这类模式需要有不同的工厂类，工厂类通常继承自同一个抽象类，在他们内部能够创建出不同的对象。从而在主应用程序里实现一个方法的调用可以按照需求创造出不同工厂的产出对象。</p>
+<h2 id="4-单例模式"><a href="#4-单例模式" class="headerlink" title="4. 单例模式"></a>4. 单例模式</h2>
         </div>
 
         
@@ -263,7 +242,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://dempsey1201.github.io/Dempsey.github.io/2024/01/09/SQL-1/">https://dempsey1201.github.io/Dempsey.github.io/2024/01/09/SQL-1/</a></span>
+                        <span><a href="https://dempsey1201.github.io/Dempsey.github.io/2024/01/11/designMode/">https://dempsey1201.github.io/Dempsey.github.io/2024/01/11/designMode/</a></span>
                     </p>
                 
                 
@@ -287,7 +266,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/Dempsey.github.io/tags/SQL/"># SQL</a>
+                        <a href="/Dempsey.github.io/tags/Java/"># Java</a>
                     
                         
                 </span>
@@ -300,10 +279,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/Dempsey.github.io/2024/01/11/designMode/">designMode</a>
+                <a class="prev" rel="prev" href="/Dempsey.github.io/2024/01/11/algorithm-18/">Leetcode 69. x 的平方根</a>
             
             
-            <a class="next" rel="next" href="/Dempsey.github.io/2024/01/08/Java-OOP/">Java-OOP</a>
+            <a class="next" rel="next" href="/Dempsey.github.io/2024/01/09/SQL-1/">SQL-1</a>
             
         </section>
 
