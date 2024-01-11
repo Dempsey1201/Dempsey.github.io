@@ -312,7 +312,43 @@
 <li>接口不可以被实例化；接口可以没有任何的方法（比如序列化和克隆等）；接口定义不能有final字样，因为它出现的目的就是为了被继承和实现；</li>
 <li><strong>Java对于抽象类的继承不支持多继承，但是接口的出现导致一个类可以同时实现多个接口的方法，从而实现了类多继承</strong></li>
 </ol>
-<h2 id><a href="#" class="headerlink" title></a></h2>
+<h2 id="static-关键字"><a href="#static-关键字" class="headerlink" title="static 关键字"></a>static 关键字</h2><p>内存分布，static修饰的内容都会存在静态区，引用在栈，对象在堆</p>
+<ol>
+<li>静态变量</li>
+</ol>
+<ul>
+<li>静态变量在类加载的时候就被初始化在静态区，并且只会获取一次内存空间，所以对于一个会被初始化很多次但是某字段通用的变量来说，static可以很大程度上的节省空间。</li>
+<li>外部程序不能通过对象来访问，只能通过类来访问，内部可以使用；</li>
+</ul>
+<ol start="2">
+<li>静态方法</li>
+</ol>
+<ul>
+<li>静态方法属于创建它的类，而不属于该类实例化出来的对象；</li>
+<li>静态方法可以访问静态变量，但是其不能访问非静态变量和方法（因为他们会在静态方法后加载进来）。</li>
+</ul>
+<ol start="3">
+<li>静态代码块</li>
+</ol>
+<ul>
+<li>静态代码块常被用来初始化静态变量，因为它会优先于main被执行；</li>
+<li>比如 一些静态的ArrayList等对象在定义的时候很难被初始化，通过调用静态代码块则可以通过方法填充内容。</li>
+</ul>
+<ol start="4">
+<li>静态内部类</li>
+</ol>
+<ul>
+<li>可以访问外部类的所有静态变量和方法，包括私有的。其余都不能访问；</li>
+<li>可以用来创建单例模式。</li>
+</ul>
+<h2 id="final-关键字"><a href="#final-关键字" class="headerlink" title="final 关键字"></a>final 关键字</h2><p>被final修饰的变量不可以被修改且必须被初始化，但是如果是一个对象，其内部字段可以被修改；<br>被final修饰的方法不可以被重写。<br>被final修饰的类不可以被继承，但是可以修改其内部的内容。</p>
+<p>核心理解在于：地址空间是否会发生改变。</p>
+<h2 id="instanceof-关键字"><a href="#instanceof-关键字" class="headerlink" title="instanceof 关键字"></a>instanceof 关键字</h2><ul>
+<li>用来判断是否属于一个类，如果一个类A继承了B实现了接口C那么它和ABC的instanceof的结果都是true；</li>
+<li>Object() 是Java里面所有类的父类，所以所有都是true；</li>
+<li>除了 空指针 null 在和任何类包括Object都会输出false。<br>常见的用法：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断它是不是一个 ClassA</span></span><br><span class="line"><span class="keyword">if</span> (a <span class="keyword">instanceof</span> ClassA) &#123;</span><br><span class="line">    <span class="comment">// 如果是ClassA，需要进行类型转换才可以被使用。</span></span><br><span class="line">    <span class="type">ClassA</span> <span class="variable">newObject</span> <span class="operator">=</span> (ClassA) a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
         </div>
 
         
