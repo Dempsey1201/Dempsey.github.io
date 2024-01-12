@@ -249,6 +249,13 @@
 <h2 id="获取字符串字段的长度并且进行判断"><a href="#获取字符串字段的长度并且进行判断" class="headerlink" title="获取字符串字段的长度并且进行判断"></a>获取字符串字段的长度并且进行判断</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/invalid-tweets/description/">1683. 无效的推文</a><br>CHAR_LENGTH(字段) 可以获得每一条记录所在字段的长度信息。</p>
 <h2 id="获取SQL日期字段类型的相差天数"><a href="#获取SQL日期字段类型的相差天数" class="headerlink" title="获取SQL日期字段类型的相差天数"></a>获取SQL日期字段类型的相差天数</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rising-temperature/description/">197. 上升的温度</a><br>datediff(date1, date2) 可以获取两个日期相差的天数，是前一个减去后一个。</p>
 <h3 id="时间戳类型的差可以直接通过-“-”-来实现！！！"><a href="#时间戳类型的差可以直接通过-“-”-来实现！！！" class="headerlink" title="时间戳类型的差可以直接通过 “-” 来实现！！！"></a>时间戳类型的差可以直接通过 “-” 来实现！！！</h3><h2 id="保留小数类的函数"><a href="#保留小数类的函数" class="headerlink" title="保留小数类的函数"></a>保留小数类的函数</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/average-time-of-process-per-machine/description/">1661. 每台机器的进程平均运行时间</a><br>在SQL中，小数可以通过Round(num, 3)来保留三位小数。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Alone_in_/article/details/105897474">CAST, ROUND, CONVERT 区别辨析</a></p>
+<h2 id="笛卡尔积"><a href="#笛卡尔积" class="headerlink" title="笛卡尔积"></a>笛卡尔积</h2><p>Mysql不支持全外连接等，如果想要全外连接需要用UNION来做。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="operator">*</span> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> <span class="operator">*</span> <span class="keyword">ON</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="operator">*</span> <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> <span class="operator">*</span> <span class="keyword">ON</span> <span class="operator">*</span> </span><br></pre></td></tr></table></figure>
+
+<p>获取两个表格的完全乘积，即笛卡尔积需要使用 CROSS JOIN，不加约束就是笛卡尔积。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CROSS</span> <span class="keyword">JOIN</span> </span><br></pre></td></tr></table></figure>
+
+<p><strong>另外需要注意的是</strong><br>聚合函数<code>count()</code>把null会算作0；</p>
 
         </div>
 

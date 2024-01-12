@@ -348,6 +348,26 @@
 <li>Object() 是Java里面所有类的父类，所以所有都是true；</li>
 <li>除了 空指针 null 在和任何类包括Object都会输出false。<br>常见的用法：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断它是不是一个 ClassA</span></span><br><span class="line"><span class="keyword">if</span> (a <span class="keyword">instanceof</span> ClassA) &#123;</span><br><span class="line">    <span class="comment">// 如果是ClassA，需要进行类型转换才可以被使用。</span></span><br><span class="line">    <span class="type">ClassA</span> <span class="variable">newObject</span> <span class="operator">=</span> (ClassA) a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h2 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h2><ul>
+<li>函数名一样，但是参数可以在类型，数量上不一样；</li>
+<li>当调用输入的数据不够函数参数类型，会自动进行向上转型。</li>
+</ul>
+<h2 id="函数重写"><a href="#函数重写" class="headerlink" title="函数重写"></a>函数重写</h2><ul>
+<li>必须有继承关系才可以重写函数，但是只能比父类的可见度更高；</li>
+<li>父类的private方法不能够被继承，也就不能够被重写；</li>
+<li>final 和 static 方法不能够被重写；</li>
+<li>子类重写不能抛出比父类函数更高的异常；</li>
+<li>构造方法不能被重写，可以调用super</li>
+<li>继承了抽象类，其内部的抽象方法必须全部被实现，接口的方法可以不被实现；</li>
+</ul>
+<h2 id="枚举类型（enum）"><a href="#枚举类型（enum）" class="headerlink" title="枚举类型（enum）"></a>枚举类型（enum）</h2><p>使用范例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">Customer</span> &#123;</span><br><span class="line">    STUDENT,</span><br><span class="line">    TEACHER,</span><br><span class="line">    SALER</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Customer</span> <span class="variable">cos</span> <span class="operator">=</span> Customer.STUDENT;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>枚举类是final的，不能够被继承；</li>
+<li>因为变量是static final的，所以其在JVM里面只有一个常量对象，可以通过 “&#x3D;&#x3D;” 来比较；</li>
+<li></li>
+</ul>
 
         </div>
 
